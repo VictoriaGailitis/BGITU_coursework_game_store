@@ -1,0 +1,99 @@
+{% extends "layout.html" %}
+{% block content %}
+<h2>Game Inventory</h2>
+    {% for game in games %}
+        <article class="media content-section">
+          <div class="media-body">
+                <div class="article-metadata">
+                    <a class="mr-2" href="{{ url_for('game', selected_game=game.game_name) }}">{{ game.game_name }}</a>
+                    <small class="text-muted"><strong>genre:</strong>      {{ game.genre }}     |</small>
+                    <small class="text-muted"><strong>release date:</strong>      {{ game.release_date }}     |</small>
+                    <small class="text-muted"><strong>price:</strong>      {{ game.price }}    |</small>
+                    {% for publisher in publishers %}
+                        {% if publisher.id == game.publisher_id %}
+                            <small class="text-muted"><strong>publisher:</strong>   {{ publisher.publisher_name }}</small>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+          </div>
+        </article>
+        <article class="media content-section">
+        {% if game.id == 1 %}
+            <img src="https://vignette.wikia.nocookie.net/assassinscreed/images/6/6a/Accover.jpg/revision/latest?cb=20091222104717">
+        {% endif %}
+        {% if game.id == 2 %}
+            <img src="https://upload.wikimedia.org/wikipedia/en/7/77/Assassins_Creed_2_Box_Art.JPG">
+        {% endif %}
+        {% if game.id == 3 %}
+            <img src="https://upload.wikimedia.org/wikipedia/en/2/29/Assassin%27s_Creed_III_Game_Cover.jpg">
+        {% endif %}
+        {% if game.id == 4 %}
+            <img src="https://upload.wikimedia.org/wikipedia/en/2/2a/Assassins_Creed_brotherhood_cover.jpg">
+        {% endif %}
+        {% if game.id == 5 %}
+            <img src="https://upload.wikimedia.org/wikipedia/en/d/d9/Assassins_Creed_Revelations_Cover.jpg">
+        {% endif %}
+        {% if game.id == 6 %}
+            <img src="https://upload.wikimedia.org/wikipedia/en/0/05/MassEffect2_cover.PNG">
+        {% endif %}
+        {% if game.id == 7 %}
+            <img src="https://upload.wikimedia.org/wikipedia/en/a/a9/Need_for_Speed_2015.jpg">
+        {% endif %}
+        {% if game.id == 8 %}
+            <img src="https://upload.wikimedia.org/wikipedia/en/4/49/Cover_Art_of_Anthem.jpg">
+        {% endif %}
+        {% if game.id == 9 %}
+            <img src="https://upload.wikimedia.org/wikipedia/en/8/84/Titanfall_box_art.jpg">
+        {% endif %}
+        {% if game.id == 10 %}
+            <img src="https://upload.wikimedia.org/wikipedia/en/7/75/Battlefield_4_cover_art.jpg">
+        {% endif %}
+        {% if game.id == 11 %}
+            <img src="https://upload.wikimedia.org/wikipedia/en/1/19/Call_of_Duty_World_at_War_cover.png">
+        {% endif %}
+        {% if game.id == 12 %}
+            <img src="https://upload.wikimedia.org/wikipedia/en/0/06/Destiny_XBO.jpg">
+        {% endif %}
+        {% if game.id == 13 %}
+            <img src="https://upload.wikimedia.org/wikipedia/en/1/1c/Call_of_Duty_Black_Ops_4_official_box_art.jpg">
+        {% endif %}
+        {% if game.id == 14 %}
+            <img src="https://upload.wikimedia.org/wikipedia/en/d/de/Crash_Bandicoot_N._Sane_Trilogy_cover_art.jpg">
+        {% endif %}
+        {% if game.id == 15 %}
+            <img src="https://upload.wikimedia.org/wikipedia/en/5/58/TonyHawksProSkaterPlayStation1.jpg">
+        {% endif %}
+        {% if game.id == 16 %}
+            <img src="https://upload.wikimedia.org/wikipedia/en/6/68/Bloodborne_Cover_Wallpaper.jpg">
+        {% endif %}
+        {% if game.id == 17 %}
+            <img src="https://upload.wikimedia.org/wikipedia/en/a/a7/God_of_War_4_cover.jpg">
+        {% endif %}
+        {% if game.id == 18 %}
+            <img src="https://upload.wikimedia.org/wikipedia/en/4/46/Video_Game_Cover_-_The_Last_of_Us.jpg">
+        {% endif %}
+        {% if game.id == 19 %}
+            <img src="https://upload.wikimedia.org/wikipedia/en/3/37/Ratchet_and_Clank_cover.jpg">
+        {% endif %}
+        {% if game.id == 20 %}
+            <img src="https://upload.wikimedia.org/wikipedia/en/3/34/Infamous_second_son_boxart.jpg">
+        {% endif %}
+        {% if game.id == 21 %}
+            <img src="https://upload.wikimedia.org/wikipedia/en/c/c6/The_Legend_of_Zelda_Breath_of_the_Wild.jpg">
+        {% endif %}
+        {% if game.id == 22 %}
+            <img src="https://upload.wikimedia.org/wikipedia/en/8/8d/Super_Mario_Odyssey.jpg">
+        {% endif %}
+        {% if game.id == 23 %}
+            <img src="https://upload.wikimedia.org/wikipedia/en/5/50/Super_Smash_Bros._Ultimate.jpg">
+        {% endif %}
+        {% if game.id == 24 %}
+            <img src="https://upload.wikimedia.org/wikipedia/en/4/49/Splatoon_2.jpg">
+        {% endif %}
+        {% if game.id == 25 %}
+            <img src="https://upload.wikimedia.org/wikipedia/en/0/04/AnimalCrossingNewLeafNABoxart.jpg">
+        {% endif %}
+        <small class="text-muted"><strong>Description:</strong>      {{ game.description }}    </small>
+        </article>
+    {% endfor %}
+{% endblock content %}
