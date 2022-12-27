@@ -3,7 +3,6 @@ from wtforms import StringField, PasswordField, SubmitField, BooleanField, Integ
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 from game_store.models import Customer
 
-
 class RegistrationForm(FlaskForm):
     username = StringField('Имя пользователя',
                            validators=[DataRequired(), Length(min=2, max=20)])
