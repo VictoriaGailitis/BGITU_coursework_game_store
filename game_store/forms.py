@@ -5,14 +5,14 @@ from game_store.models import Customer
 
 
 class RegistrationForm(FlaskForm):
-    username = StringField('Username',
+    username = StringField('Имя пользователя',
                            validators=[DataRequired(), Length(min=2, max=20)])
     email = StringField('Email',
                         validators=[DataRequired(), Email()])
-    password = PasswordField('Password', validators=[DataRequired()])
-    confirm_password = PasswordField('Confirm Password',
+    password = PasswordField('Пароль', validators=[DataRequired()])
+    confirm_password = PasswordField('Подтвердите пароль',
                                      validators=[DataRequired(), EqualTo('password')])
-    submit = SubmitField('Sign Up')
+    submit = SubmitField('Войти')
 
     def validate_username(self, username):
         user = Customer.query.filter_by(username=username.data).first()
@@ -28,17 +28,17 @@ class RegistrationForm(FlaskForm):
 class LoginForm(FlaskForm):
     email = StringField('Email',
                         validators=[DataRequired(), Email()])
-    password = PasswordField('Password', validators=[DataRequired()])
-    remember = BooleanField('Remember Me')
-    submit = SubmitField('Login')
+    password = PasswordField('Пароль', validators=[DataRequired()])
+    remember = BooleanField('Запомнить меня')
+    submit = SubmitField('Войти')
 
 
 class BuyForm(FlaskForm):
-    quantity = IntegerField('Quantity', validators=[DataRequired()])
-    submit = SubmitField('Buy')
+    quantity = IntegerField('Количество', validators=[DataRequired()])
+    submit = SubmitField('Купить')
 
 class ReturnForm(FlaskForm):
-    submit = SubmitField('Return')
+    submit = SubmitField('Отменить')
 
 class AddMoneyForm(FlaskForm):
-    submit = SubmitField('Add $20')
+    submit = SubmitField('Добавить $20')

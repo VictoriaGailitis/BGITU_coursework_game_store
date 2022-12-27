@@ -82,15 +82,17 @@ class Game(db.Model):
     price = db.Column(db.Numeric(4, 2), nullable=False)
     description = db.Column(db.String(200), nullable=False)
     publisher_id = db.Column(db.Integer, db.ForeignKey('publisher.id'))
+    poster = db.Column(db.String(100), nullable=False)
     runs = db.relationship("Run", cascade="all, delete-orphan")
 
-    def __init__(self, game_name, genre, release_date, price, description, publisher_id):
+    def __init__(self, game_name, genre, release_date, price, description, publisher_id, poster):
         self.game_name = game_name
         self.genre = genre
         self.release_date = release_date
         self.price = price
         self.description = description
         self.publisher_id = publisher_id
+        self.poster = poster
 
     def __repr__(self):
         return f"Game('{self.game_name}', '{self.genre}', '{self.release_date}', '{self.price}', '{self.description}', '{self.publisher_id}')"
@@ -132,62 +134,159 @@ class Run(db.Model):
 #Platform.__table__.create(db.engine)
 #Run.__table__.create(db.engine)
 
-db.create_all()
+#db.create_all()
+
 games = [
-    Game(game_name="Assassin's Creed", genre="action-adventure", release_date=datetime.date(2007, 11, 13), price=10.00, description='The first game in the Assassins Creed franchise is set in 1191 AD, when the Third Crusade was tearing the Holy Land apart. Shrouded in secrecy and feared for their ruthlessness, the Assassins intend to stop the hostilities by suppressing both sides of the conflict. Players, assuming the role of the main character Altair, will have the power to throw their immediate environment into chaos and to shape events during this pivotal moment in history'
-         ,publisher_id=1),
+    Game(game_name="Assassin's Creed", genre="action-adventure", release_date=datetime.date(2007, 11, 13), price=10.00,
+         description='Ваш персонаж - ассасин, таинственный воин, не ведающий пощады. Своими действиями вы способны'
+                     ' устроить настоящий хаос. Именно вы определяете события поворотных периодов истории.'
+         ,publisher_id=1, poster="https://static.wikia.nocookie.net/assassinscreed/images/6/6a/Accover.jpg/revision"
+                                 "/latest?cb=20161203080803&path-prefix=ru"),
     Game(game_name="Assassin's Creed II", genre="action-adventure", release_date=datetime.date(2009, 11, 17),
-         price=15.00, description='The second game in the Assassin’s Creed franchise which allows the player to discover an intriguing & fascinating new epic story of power, revenge and conspiracy set in a pivotal moment of History: the Italian Renaissance.' ,publisher_id=1),
+         price=15.00, description='Интриги и месть в захватывающей истории одного рода в чарующем, но жестоком антураже'
+                                  ' Италии эпохи Возрождения.' ,publisher_id=1,
+         poster="https://upload.wikimedia.org/wikipedia/en/7/77/Assassins_Creed_2_Box_Art.JPG"),
     Game(game_name="Assassin's Creed III", genre="action-adventure", release_date=datetime.date(2012, 10, 30),
-         price=25.00, description='The American Colonies, 1775. Its a time of civil unrest and political upheaval in the Americas. As a Native American assassin fights to protect his land and his people, he will ignite the flames of a young nations revolution.' ,publisher_id=1),
+         price=25.00, description='Переживите события Американской революции заново в обновлённой версии Assassins'
+                                  'Creed® III Remastered с улучшенными графикой и игровой механикой. В комплект входят'
+                                  'все дополнения для одиночной игры и обновлённая версия Assassins Creed Liberation.'
+         ,publisher_id=1, poster="https://upload.wikimedia.org/wikipedia/en/2/29/Assassin%27s_Creed_III_Game_Cover.jpg"),
     Game(game_name="Assassin's Creed Brotherhood", genre="action-adventure", release_date=datetime.date(2010, 11, 16),
-         price=15.00, description='Whether youre moving into a new apartment or fighting against the corruption of the Templar Order, its always good to have help. Master Assassin Ezio enlists the aid of the Brotherhood, an order of assassins dedicated to toppling the corrupt Templar tyrants. In order to strike at the heart of their enemy, they must journey to Rome, the center of the Templars power and greed. Assassins Creed Brotherhood features a series-first multiplayer mode that allows you to choose from a variety characters, each with unique weapons and techniques, and then match your skills against other assassins from around the world.' ,publisher_id=1),
+         price=15.00, description='Эцио Аудиторре удалось отомстить за убийство своего отца и братьев. Поднявшись на'
+                                  ' вершину иерархии ордена Ассасинов, он решает уйти на покой и провести оставшиеся'
+                                  ' годы жизни в тишине и покое. Но трагические обстоятельства вынуждает Эцио вернуться'
+                                  ' в Рим, чтобы освободить город от коррумпированного правительства, нищеты и заговора'
+                                  ' Тамплиеров.' ,publisher_id=1,
+         poster="https://upload.wikimedia.org/wikipedia/en/2/2a/Assassins_Creed_brotherhood_cover.jpg"),
     Game(game_name="Assassin's Creed Revelations", genre="action-adventure", release_date=datetime.date(2011, 11, 15),
-         price=20.00, description='When a mans battles have been won and his enemies destroyed what then? Where does he find purpose and meaning? To find answers to these questions, Ezio Auditore will travel east in search of the lost library of the Assassins. In Assassins Creed® Revelations, master assassin Ezio Auditore walks in the footsteps of the legendary mentor Altair, on a journey of discovery and revelation. It is a perilous path - one that will take Ezio to Constantinople, the heart of the Ottoman Empire, where a growing army of Templars threatens to destabilize the region.' ,publisher_id=1),
-    Game(game_name="Mass Effect 2", genre="action role-playing", release_date=datetime.date(2010, 1, 26), price=10.00, description='"Mass Effect" is a science-fiction action and role-playing game (RPG) created by BioWare, the commercially and critically acclaimed RPG developer of "Jade Empire” and "Star Wars: Knights of the Old Republic." "Mass Effect" delivers an immersive, story-driven gameplay experience with stunning visual fidelity. As one of the first human beings to step onto the galactic stage, you face a grave threat that may destroy all of civilization. Your job is complicated by the fact that no one believes that there is any threat at all. Travel across an expansive universe, exploring the uncharted corners of the galaxy, searching for pieces of the truth in order to discover how to defeat the coming destruction.' ,
-         publisher_id=2),
-    Game(game_name="Need for Speed", genre="racing", release_date=datetime.date(2015, 11, 3), price=25.00, description='Discover the nocturnal open world of urban car culture, driven by Five Ways to Play, in this thrilling reboot of Need for Speed. Carve your own unique path, via multiple overlapping stories, gaining reputation on your journey to become the ultimate icon. Need for Speed delivers on what fans have been requesting and what the franchise stands for - deep customization, an authentic open world filled with real world car culture, and a narrative that drives your game.',
-         publisher_id=2),
-    Game(game_name="Anthem", genre="action role-playing", release_date=datetime.date(2019, 2, 22), price=60.00, description='On a world left unfinished by the gods, a shadowy faction threatens all of humankind. The only thing that stands between these villains and the ancient technology they covet are the Freelancers.' ,
-         publisher_id=2),
-    Game(game_name="Titanfall", genre="first-person shooter", release_date=datetime.date(2014, 3, 11), price=20.00, description='Prepare for Titanfall. Crafted by one of the co-creators of Call of Duty and other key developers behind the Call of Duty franchise, Titanfall is an all-new universe juxtaposing small vs. giant, natural vs. industrial and man vs. machine. The visionaries at Respawn have drawn inspiration from their proven experiences in first-person action and with Titanfall are focused on bringing something exciting to the next generation of multiplayer gaming.' ,
-         publisher_id=2),
-    Game(game_name="Battlefield 4", genre="first-person shooter", release_date=datetime.date(2013, 10, 29), price=15.00, description='Battlefield 4 is the genre-defining action blockbuster made from moments that blur the line between game and glory. Fueled by the next-generation power and fidelity of Frostbite 3, Battlefield 4 provides a visceral, dramatic experience unlike any other. Only in Battlefield will you blow the foundations of a dam or reduce an entire skyscraper to rubble. Only in Battlefield will you lead a naval assault from the back of a gun boat. Battlefield grants you the freedom to do more and be more while playing to your strengths and carving your own path to victory.' ,
-         publisher_id=2),
+         price=20.00, description='Разве постаревший Ассасин не заслуживает пенсию, отдых в семейной вилле и других'
+                                  ' прелестей жизни? Но Эцио Аудиторре решает, что всё это уже не для него. Все враги'
+                                  ' повержены, а войны выиграны. Пришло время достичь чего-то большего. Прославившийся'
+                                  ' мастер-ассасин отправляется в своё последнее и самое опасное приключение на Восток.'
+                                  ' Он намерен пройти по пути Альтаира, чтобы познать всю истину бытия.' ,publisher_id=1,
+         poster="https://upload.wikimedia.org/wikipedia/en/d/d9/Assassins_Creed_Revelations_Cover.jpg"),
+    Game(game_name="Mass Effect 2", genre="action role-playing", release_date=datetime.date(2010, 1, 26), price=10.00,
+         description='От создателей Star Wars: Knights of the Old Republic, Dragon Age: Origins и Mass Effect встречайте'
+                     ' второй тёмный эпизод эпичной трилогии Mass Effect.Через два года после того, как капитан Шепард'
+                     ' отразил вторжение Жнецов, стремившихся уничтожить всю органическую жизнь во вселенной, у'
+                     ' человечества появился новый враг.' ,
+         publisher_id=2, poster="https://upload.wikimedia.org/wikipedia/en/0/05/MassEffect2_cover.PNG"),
+    Game(game_name="Need for Speed", genre="racing", release_date=datetime.date(2015, 11, 3), price=25.00,
+         description='Популярнейшая и всемирно известная серия гоночных игр Need For Speed развивается и пахнет свежей'
+                     ' краской, новым салоном и бензином. Студия Ghost Games смело взяла на себя ответственность за'
+                     ' перезапуск NFS, делая из старого, нечто новое! Около двух лет они изучали нужды аудитории, они'
+                     ' хотели вдохнуть в этот жанр свежего глотка воздуха! Учли множество аспектов, поняли, чего хотят'
+                     ' поклонники и добились желаемого!',
+         publisher_id=2, poster="https://upload.wikimedia.org/wikipedia/en/a/a9/Need_for_Speed_2015.jpg"),
+    Game(game_name="Anthem", genre="action role-playing", release_date=datetime.date(2019, 2, 22), price=60.00,
+         description='Вы попадете в мир, в котором сплелились воедино тонкая энергия, высокие технологии и дикая'
+                     'природа. В роли фрилансера - пилота боевого джавелина, - вам предстоит выяснить причину'
+                     'катаклизмов и разобраться с коварными врагами, которые замыслили подчинить себе энергию творения.' ,
+         publisher_id=2, poster="https://upload.wikimedia.org/wikipedia/en/4/49/Cover_Art_of_Anthem.jpg"),
+    Game(game_name="Titanfall", genre="first-person shooter", release_date=datetime.date(2014, 3, 11), price=20.00,
+         description='Titanfall — это экшен с видом от первого лица с элементами шутера и симулятора роботов от'
+                     'мастеров из студий Bluepoint Games, Inc. и Respawn Entertainment.' ,
+         publisher_id=2, poster="https://upload.wikimedia.org/wikipedia/en/8/84/Titanfall_box_art.jpg"),
+    Game(game_name="Battlefield 4", genre="first-person shooter", release_date=datetime.date(2013, 10, 29), price=15.00,
+         description='6 лет прошло после событий Battlefield 3, и вот наступил 2020 год. Игроку предстоит примерить на'
+                     'себя роль разведчика Дэниела Рекера, сержанта разведывательного отряда, именующегося группой'
+                     '«Tombstone». Подразделению дали задачу прибыть в Баку и выведать особо важное информорфирование от'
+                     'русского генерала в бегах. Неожиданно группу раскрывают и бойцам ничего не остается, кроме как'
+                     'пробираться назад, борясь с превосходящей по силе российской армией.' ,
+         publisher_id=2, poster="https://upload.wikimedia.org/wikipedia/en/7/75/Battlefield_4_cover_art.jpg"),
     Game(game_name="Call of Duty World at War", genre="first-person shooter", release_date=datetime.date(2008, 11, 11),
-         price=5.00, description='Call of Duty® delivers the gritty realism and cinematic intensity of World War IIs epic battlefield moments like never before - through the eyes of citizen soldiers and unsung heroes from an alliance of countries who together helped shape the course of modern history.' ,publisher_id=3),
-    Game(game_name="Destiny", genre="first-person shooter", release_date=datetime.date(2014, 9, 9), price=20.00, description='Everything changed with the arrival of the Traveler. It sparked a Golden Age when our civilization spanned our solar system, but it didnt last. Something hit us, knocked us down. The survivors built a city beneath the Traveler, and have begun to explore our old worlds, only to find them filled with deadly foes. You are a Guardian of the last safe city on Earth, able to wield incredible power. Defend the City. Defeat our enemies. Reclaim all that we have lost. Be brave.' ,
-         publisher_id=3),
+         price=5.00, description='Потрясающий шутер от первого лица, действия в котором происходят во время Второй'
+                                 'мировой войны. Сюжет не заставит вас скучать: 15 различных миссий с переменной сменой'
+                                 'вашего персонажа. Отличная графика и геймплей, удобное управление.' ,publisher_id=3,
+         poster="https://upload.wikimedia.org/wikipedia/en/1/19/Call_of_Duty_World_at_War_cover.png"),
+    Game(game_name="Destiny", genre="first-person shooter", release_date=datetime.date(2014, 9, 9), price=20.00,
+         description='Destiny 2 – это экшен-MMO в едином развивающемся мире, к которому вы с друзьями можете'
+                     'присоединиться где и когда угодно, абсолютно бесплатно.' ,
+         publisher_id=3, poster="https://upload.wikimedia.org/wikipedia/en/0/06/Destiny_XBO.jpg"),
     Game(game_name="Call of Duty Black Ops 4", genre="first-person shooter", release_date=datetime.date(2018, 10, 12),
-         price=50.00, description='Black Ops is back! Featuring gritty, grounded Multiplayer combat, the biggest Zombies offering ever with three full undead adventures at launch, and Blackout, where the universe of Black Ops comes to life in a massive battle royale experience. Blackout features the largest map in Call of Duty history, signature Black Ops combat, and characters, locations and weapons from the Black Ops series.' ,publisher_id=3),
-    Game(game_name="Crash Bandicoot", genre="platform", release_date=datetime.date(2017, 6, 30), price=40.00, description='Your favorite marsupial, Crash Bandicoot, is back! Hes enhanced, entranced & ready-to-dance with the N. Sane Trilogy game collection. Now you can experience Crash Bandicoot like never before in Fur-K. Spin, jump, wump and repeat as you take on the epic challenges and adventures through the three games that started it all, Crash Bandicoot, Crash Bandicoot 2: Cortex Strikes Back and Crash Bandicoot 3: Warped. Relive all your favorite Crash moments in their fully-remastered HD graphical glory and get ready to put some UMPH in your WUMP!' ,
-         publisher_id=3),
-    Game(game_name="Tony Hawk's Pro Skater", genre="sports", release_date=datetime.date(1999, 7, 31), price=2.00, description='Go Big, Go Pro! Skate as legendary Tony Hawk, or as one of nine top pros. Work your way up the ranks by landing suicidal tricks in brutal competitions to become the highest ranked skate champ! Great features such as: Signature Pro Moves, fully skateable worlds, head-to-head competition, and Instant Replay Mode.' ,
-         publisher_id=3),
-    Game(game_name="Bloodborne", genre="action role-playing", release_date=datetime.date(2015, 3, 24), price=30.00, description='Introducing Bloodborne, the latest Action RPG from renowned Japanese developer FromSoftware, exclusively for the PlayStation®4 system. Face your fears as you search for answers in the ancient city of Yharnam, now cursed with a strange endemic illness spreading through the streets like wildfire. Danger, death and madness lurk around every corner of this dark and horrific world, and you must discover its darkest secrets in order to survive.' ,
-         publisher_id=4),
-    Game(game_name="God of War", genre="action-adventure", release_date=datetime.date(2018, 4, 20), price=60.00, description='It is a new beginning for Kratos. Living as a man outside the shadow of the gods, he ventures into the brutal Norse wilds with his son Atreus, fighting to fulfill a deeply personal quest.' ,
-         publisher_id=4),
-    Game(game_name="The Last of Us", genre="action-adventure", release_date=datetime.date(2014, 7, 29), price=20.00, description='Winner of over 200 Game of the Year awards, The Last of Us has been rebuilt for the PlayStation®4 system. Now featuring full 1080p, higher resolution character models, improved shadows and lighting, in addition to several other gameplay improvements. 20 years after a pandemic has radically changed known civilization, infected humans run wild and survivors are killing each other for food, weapons; whatever they can get their hands on. Joel, a violent survivor, is hired to smuggle a 14 year-old girl, Ellie, out of an oppressive military quarantine zone, but what starts as a small job soon transforms into a brutal journey across the U.S. The Last of Us Remastered includes the Abandoned Territories Map Pack, Reclaimed Territories Map Pack, and the critically acclaimed The Last of Us: Left Behind Single Player campaign that combines themes of survival, loyalty, and love with tense, survival-action gameplay.' ,
-         publisher_id=4),
-    Game(game_name="Ratchet and Clank", genre="platform", release_date=datetime.date(2016, 4, 12), price=40.00, description='Play the game, based on the movie, based on the game! Ratchet & Clank (PS4) is a new game based on elements from the original Ratchet & Clank (PS2). Developed alongside the major motion CG-animated picture coming to theatres in 2016, Ratchet & Clank (PS4) marks the PlayStation 4 debut of PlayStations greatest heroes. Join Ratchet, Clank, Captain Qwark and new friends as they battle to save the Solana Galaxy from the evil Chairman Drek.' ,
-         publisher_id=4),
+         price=50.00, description='Call of Duty®: Black Ops 4 – это суровая, жесткая и динамичная сетевая игра, целых'
+                                  ' три приключения с мертвецами в режиме “Зомби”, и режим “Затмение”, где вселенная'
+                                  ' Black Ops воплотится в грандиозной “королевской битве”. Black Ops 4 будет самой'
+                                  ' внушительной, безупречной и масштабируемой игрой Call of Duty® для PC в истории.'
+                                  ' Вас ждет неограниченная частота кадров, разрешение 4К, HDR, поддержка сверхшироких'
+                                  ' мониторов и множество других функций, ориентированных на пользователей '
+                                  ' компьютеров.' ,publisher_id=3,
+         poster="https://upload.wikimedia.org/wikipedia/en/1/1c/Call_of_Duty_Black_Ops_4_official_box_art.jpg"),
+    Game(game_name="Crash Bandicoot", genre="platform", release_date=datetime.date(2017, 6, 30), price=40.00,
+         description='Всеобщий сумчатый любимец Crash Bandicoot™ возвращается! В коллекции N. Sane Trilogy он стал еще'
+                     ' шустрее, веселее и обаятельнее! Переживите заново любимые моменты игр Crash Bandicoot™,'
+                     'Crash Bandicoot™ 2: Cortex Strikes Back и Crash Bandicoot™ 3: Warped, увидев их во всем блеске'
+                     'полностью переработанной графики!' ,
+         publisher_id=3,
+         poster="https://upload.wikimedia.org/wikipedia/en/d/de/Crash_Bandicoot_N._Sane_Trilogy_cover_art.jpg"),
+    Game(game_name="Tony Hawk's Pro Skater", genre="sports", release_date=datetime.date(1999, 7, 31), price=2.00,
+         description='Снова прокатитесь с ветерком в самом легендарном симуляторе скейтбординга. Играйте за легендарного'
+                     'Тони Хоука и других профи из оригинальной игры, а также за новых звёзд скейтбординга. Кайфуйте'
+                     'под ностальгическую музыку, а также новые треки. Мочите мощные комбо, используя классическое'
+                     'управление серии Tony Hawks™ Pro Skater™. Все оригинальные режимы игры и не только. Играйте во'
+                     'всех оригинальных режимах и один на один в режимах для двух игроков. Демонстрируйте свой стиль и'
+                     'творчество в улучшенных режимах создания парка (Create-A-Park) и скейтера (Create-A-Skater).'
+                     'Соревнуйтесь с игроками со всего мира в многопользовательских режимах и в таблицах лидеров.' ,
+         publisher_id=3, poster="https://upload.wikimedia.org/wikipedia/en/5/58/TonyHawksProSkaterPlayStation1.jpg"),
+    Game(game_name="Bloodborne", genre="action role-playing", release_date=datetime.date(2015, 3, 24), price=30.00,
+         description='Одинокий путник. Проклятый город. Смертоносная тайна, уничтожающая все, к чему она прикоснется.'
+                     'Взгляните в лицо своим страхам на улицах загнивающего Ярнама — проклятого места, разъедаемого'
+                     'ужасным, всепоглощающим мором. Доживете ли до рассвета?' ,
+         publisher_id=4, poster="https://upload.wikimedia.org/wikipedia/en/6/68/Bloodborne_Cover_Wallpaper.jpg"),
+    Game(game_name="God of War", genre="action-adventure", release_date=datetime.date(2018, 4, 20), price=60.00,
+         description='Отомстив богам Олимпа, Кратос поселился в царстве скандинавских божеств и чудовищ. В этом суровом'
+                     'беспощадном мире он должен не только самостоятельно бороться за выживание... но и научить этому'
+                     'сына.' ,
+         publisher_id=4, poster="https://upload.wikimedia.org/wikipedia/en/a/a7/God_of_War_4_cover.jpg"),
+    Game(game_name="The Last of Us", genre="action-adventure", release_date=datetime.date(2014, 7, 29), price=20.00,
+         description='Игра The Last of Us™ с эмоциональным сюжетом и незабываемыми персонажами получила более 200'
+                     'наград «Игра года». Цивилизации настал конец, беснуются заражённые выжившие, а Джоэлу, усталому'
+                     'главному герою, поручено вывести 14-летнюю Элли из военной карантинной зоны. Лёгкая, казалось бы,'
+                     'задача превращается в тяжкий путь через всю страну.' ,
+         publisher_id=4, poster="https://upload.wikimedia.org/wikipedia/en/4/46/Video_Game_Cover_-_The_Last_of_Us.jpg"),
+    Game(game_name="Ratchet and Clank", genre="platform", release_date=datetime.date(2016, 4, 12), price=40.00,
+         description='Будь вы давним поклонником Рэтчета или новичком в этой серии игр, приготовьтесь к незабываемому'
+                     'путешествию по вселенной в их первом космическом приключении, полностью переосмысленном и'
+                     'переизданном для PS4™. Вас ожидает классический игровой процесс, расширенный для нового поколения,'
+                     'и графика под стать анимационному фильму 2016 года Ratchet & Clank™. ' ,
+         publisher_id=4, poster="https://upload.wikimedia.org/wikipedia/en/3/37/Ratchet_and_Clank_cover.jpg"),
     Game(game_name="Infamous Second Son", genre="action-adventure", release_date=datetime.date(2014, 3, 21),
-         price=20.00, description='inFAMOUS Second Son, a PlayStation 4 exclusive , brings you an action adventure game where surrounded by a society that fears them, superhumans are ruthlessly hunted down and caged by the Department of Unified Protection. When Delsin Rowe discovers his powers hes forced to run, searching for other superhumans in order to save those he loves from the oppressive D.U.P. The actions he takes along the way will change the future of everyone around him.' ,publisher_id=4),
+         price=20.00, description='Воспользуйтесь сверхспособностями Делсина Роу. Принимайте решения, от которых'
+                                  'зависит судьба города и людей вокруг вас.' ,publisher_id=4,
+         poster="https://upload.wikimedia.org/wikipedia/en/3/34/Infamous_second_son_boxart.jpg"),
     Game(game_name="The Legend of Zelda: Breath of the Wild", genre="action-adventure",
-         release_date=datetime.date(2017, 3, 3), price=50.00, description='Forget everything you know about The Legend of Zelda games. Step into a world of discovery, exploration, and adventure in The Legend of Zelda: Breath of the Wild, a boundary-breaking new game in the acclaimed series. Travel across vast fields, through forests, and to mountain peaks as you discover what has become of the kingdom of Hyrule In this stunning Open-Air Adventure. Now on Nintendo Switch, your journey is freer and more open than ever. Take your system anywhere, and adventure as Link any way you like.' ,publisher_id=5),
-    Game(game_name="Super Mario Odyssey", genre="platform", release_date=datetime.date(2017, 10, 27), price=50.00, description='Explore incredible places far from the Mushroom Kingdom as you join Mario and his new ally Cappy on a massive, globe-trotting 3D adventure.' ,
-         publisher_id=5),
+         release_date=datetime.date(2017, 3, 3), price=50.00,
+         description='Не осталось ничего: ни королевства, ни воспоминаний. После столетнего сна Линк просыпается в мире,'
+                     ' который он совсем не помнит. Чтобы вернуть воспоминания, легендарному герою предстоит исследовать'
+                     ' огромный мир, таящий в себе немало опасностей. Но времени у него мало: Хайрул может исчезнуть с'
+                     ' лица земли навсегда. Вооружившись тем, что смог найти, Линк отправляется на поиски ответов и того,'
+                     ' что поможет ему выжить.' ,publisher_id=5,
+         poster="https://upload.wikimedia.org/wikipedia/en/c/c6/The_Legend_of_Zelda_Breath_of_the_Wild.jpg"),
+    Game(game_name="Super Mario Odyssey", genre="platform", release_date=datetime.date(2017, 10, 27), price=50.00,
+         description='Марио отправится в кругосветное путешествие на летучем корабле под названием «Одиссея».'
+                     'Перед тем как отчалить в новое царство, корабль нужно заправить, собрав несколько лун энергии.'
+                     'Кто знает, куда он направится сегодня?' ,
+         publisher_id=5, poster="https://upload.wikimedia.org/wikipedia/en/8/8d/Super_Mario_Odyssey.jpg"),
     Game(game_name="Super Smash Bros. Ultimate", genre="fighting", release_date=datetime.date(2018, 12, 7), price=60.00,
-         description='Gaming icons clash in the ultimate brawl you can play anytime, anywhere! Smash rivals off the stage as new characters Simon Belmont and King K. Rool join Inkling, Ridley, and every fighter in Super Smash Bros. history. Enjoy enhanced speed and combat at new stages based on the Castlevania series, Super Mario Odyssey, and more!',publisher_id=5),
+         description='Вышибайте соперников с арены в этой захватывающей экшен-игре. Более зрелищные битвы,'
+                     'новые предметы, новые атаки, новые варианты защиты и другие нововведения не дадут вам оторваться'
+                     'от экрана, где бы вы ни играли: дома или в пути.',publisher_id=5,
+         poster="https://upload.wikimedia.org/wikipedia/en/5/50/Super_Smash_Bros._Ultimate.jpg"),
     Game(game_name="Splatoon 2", genre="third-person shooter", release_date=datetime.date(2017, 7, 21), price=50.00,
-         description='Ink-splatting action is back and fresher than ever. Get hyped for the sequel to the hit game about splatting ink and claiming turf, as the squid-like Inklings return in a colorful and chaotic 4 vs. 4 action shooter. For the first time, take Turf War battles on-the-go via local multiplayer in portable play styles. You can also compete in frenetic online matches like before. Two years have passed since the release of Splatoon, and two years have also passed in the game world, leading to an evolution in fashion trends and new styles of weapons and gear. Staying fresh never looked so good.',publisher_id=5),
+         description='Захватывай территорию, закрашивая ее краской своей команды в напряженных битвах 4 на 4. Побеждает'
+                     'команда, закрасившая больше! Чтобы одержать верх, нужно действовать сообща и умело превращаться'
+                     'из инклинга в кальмара, и наоборот. Вперед, в бой за район!',publisher_id=5,
+         poster="https://upload.wikimedia.org/wikipedia/en/4/49/Splatoon_2.jpg"),
     Game(game_name="Animal Crossing: New Leaf", genre="social simulation", release_date=datetime.date(2012, 11, 8),
-         price=15.00, description='Animal Crossing: New Leaf is loaded with new characters, items, and activities to enjoy all year long. Customize outfits in countless ways. Furnish your house with an extensive variety of furniture, carpet, and wall decorations to reflect your personality. Visit the new Main Street shopping area and Happy Home Showcase. Swim in the ocean to find rare shellfish. Collect insects and fossils all year long. As mayor, make the big decisions about what to build, business hours for shops, and other new ways to customize your town to your liking. Then connect with friends to show off what makes your character, your house, and your town unique.' ,publisher_id=5)
+         price=15.00, description='Переселяясь в новый город, обзавестись друзьями непросто. Особенно непросто, если'
+                                  'вы — мэр города. Приготовьтесь к новой жизни в городке, где вы можете сделать все'
+                                  'как хотите в игре Animal Crossing: New Leaf, созданной для Nintendo 3DS и Nintendo'
+                                  '3DS XL.' ,publisher_id=5,
+         poster="https://upload.wikimedia.org/wikipedia/en/0/04/AnimalCrossingNewLeafNABoxart.jpg")
 ]
 
-db.session.bulk_save_objects(games)
-db.session.commit()
+#db.session.bulk_save_objects(games)
+#db.session.commit()
 
 publishers = [
     Publisher(publisher_name="Ubisoft"),
@@ -197,8 +296,8 @@ publishers = [
     Publisher(publisher_name="Nintendo")
 ]
 
-db.session.bulk_save_objects(publishers)
-db.session.commit()
+#db.session.bulk_save_objects(publishers)
+#db.session.commit()
 
 platforms = [
     Platform(platform_name="Playstation 2", release_date=datetime.date(2000, 10, 26), price=30.00),
@@ -217,8 +316,8 @@ platforms = [
     Platform(platform_name="Nintendo 3DS", release_date=datetime.date(2011, 3, 27), price=70.00)
 ]
 
-db.session.bulk_save_objects(platforms)
-db.session.commit()
+#db.session.bulk_save_objects(platforms)
+#db.session.commit()
 
 runs = [
     Run(platform_id=7, game_id=1),

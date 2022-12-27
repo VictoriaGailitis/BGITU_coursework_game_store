@@ -4,8 +4,8 @@
         <form method="POST" action="">
             {{ form.hidden_tag() }}
             <fieldset class="form-group">
-                <legend class="border-bottom mb-4">Purchase {{ game }}</legend>
-                <small class="text-muted">Please enter a quantity.</small>
+                <legend class="border-bottom mb-4">Купить {{ game }}</legend>
+                <small class="text-muted">Введите количество.</small>
                 <div class="form-group">
                     {{ form.quantity.label(class="form-control-label") }}
                     {% if form.quantity.errors %}

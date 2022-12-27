@@ -4,13 +4,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Game Publishers</title>
-    <h2>List of Publishers</h2>
-    <h3><a href="/ea">EA</a></h3>
-    <h3><a href="/sony">Sony</a></h3>
-    <h3><a href="/nintendo">Nintendo</a></h3>
-    <h3><a href="/ubisoft">Ubisoft</a></h3>
-    <h3><a href="/activision">Activision</a></h3>
+    <title>Издатели</title>
+    <h2>Список издателей</h2>
+    {% for publisher in publishers %}
+        <h3><a href="/show_publisher/{{ publisher.id }}">{{ publisher.publisher_name }}</a></h3>
+    {% endfor %}
 </head>
 <body>
 

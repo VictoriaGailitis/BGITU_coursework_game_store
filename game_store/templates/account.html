@@ -8,36 +8,36 @@
     </div>
 </form>
 
-<h2>Orders</h2>
+<h2>Заказы</h2>
     {% for order in orders %}
         {% if order.customer_id == current_user.id %}
             <article class="media content-section">
               <div class="media-body">
                     <div class="article-metadata">
-                        <small class="text-muted"><strong>Order ID:</strong>      {{ order.id }}     |</small>
-                        <small class="text-muted"><strong>Date Ordered</strong>      {{ order.date }}     |</small>
+                        <small class="text-muted"><strong>Заказ ID:</strong>      {{ order.id }}     |</small>
+                        <small class="text-muted"><strong>Дата заказа</strong>      {{ order.date }}     |</small>
                         {% for game in games %}
                             {% if game.id == order.game_id %}
-                                <small class="text-muted"><strong>Game</strong>   {{ game.game_name }}</small>
+                                <small class="text-muted"><strong>Игра</strong>   {{ game.game_name }}</small>
                             {% endif %}
                         {% endfor %}
-                        <small class="text-muted"><strong>Quantity</strong>      {{ order.qty }}    |</small>
-                        <a class="mr-2" href="{{ url_for('returns', selected_purchase=order.id) }}">Return</a>
+                        <small class="text-muted"><strong>Количество</strong>      {{ order.qty }}    |</small>
+                        <a class="mr-2" href="{{ url_for('returns', selected_purchase=order.id) }}">Отменить</a>
                     </div>
               </div>
             </article>
         {% endif %}
     {% endfor %}
 
-<h2>Returns</h2>
+<h2>Возвраты</h2>
     {% for return in returns %}
         {% if return.customer_id == current_user.id %}
             <article class="media content-section">
               <div class="media-body">
                     <div class="article-metadata">
-                        <small class="text-muted"><strong>Return ID:</strong>      {{ return.id }}     |</small>
-                        <small class="text-muted"><strong>Date Returned</strong>      {{ return.date }}     |</small>
-                        <small class="text-muted"><strong>Purchase ID</strong>      {{ return.purchase_id }}    |</small>
+                        <small class="text-muted"><strong>Возврат ID:</strong>      {{ return.id }}     |</small>
+                        <small class="text-muted"><strong>Дата возврата</strong>      {{ return.date }}     |</small>
+                        <small class="text-muted"><strong>Покупка ID</strong>      {{ return.purchase_id }}    |</small>
                     </div>
               </div>
             </article>
